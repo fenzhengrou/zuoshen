@@ -1,3 +1,4 @@
+from generator import *
 # 异或运算
 # 相同则为0， 不相同则为1 / 不进位相加
 # 满足交换律， 结合律 a ^ b = b ^ a, a ^ b ^ c = a ^ c ^ b
@@ -15,11 +16,11 @@ def swap(arr, i, j):
     :param j:
     :return:
     """
-    print(f"i is {arr[i]}, j is {arr[j]}")
+    # print(f"i is {arr[i]}, j is {arr[j]}")
     arr[i] = arr[i] ^ arr[j]
     arr[j] = arr[i] ^ arr[j]
     arr[i] = arr[i] ^ arr[j]
-    print(f"i is {arr[i]}, j is {arr[j]}")
+    # print(f"i is {arr[i]}, j is {arr[j]}")
 
 
 def get_right_one(num):
@@ -74,24 +75,24 @@ def find_num2():
 
 
 def bubble_sort(arr):
-    print(f"before sorting: {arr}")
+    # print(f"before sorting: {arr}")
     for i in range(len(arr)):
         for j in range(i):
             if arr[j] > arr[i]:
                 swap(arr, i, j)
 
-    print(f"after sorting: {arr}")
+    # print(f"after sorting: {arr}")
 
 
 def insert_sort(arr):
-    print(f"before sorting: {arr}")
+    # print(f"before sorting: {arr}")
     for i in range(len(arr)):
         for j in range(i, 0, -1):
             if arr[j-1] < arr[j] and (j-1) >= 0:
                 break
             else:
                 swap(arr,j, j-1)
-    print(f"after sorting: {arr}")
+    # print(f"after sorting: {arr}")
 
 
 def bi_find(arr, n):
@@ -111,15 +112,29 @@ def bi_find(arr, n):
 
 
 def main():
+    times = 10
+    flag = True
+    for i in range(times):
+        g = Generator(1000,100)
+        arr = g.random_generator()
+        cpy_arr = g.cpy_arr(arr)
+        cpy_arr.sort()
+        insert_sort(arr)
+        for j in range(len(arr)):
+            if arr[j] != cpy_arr[j]:
+                flag = False
+                break
+    print("Nice" if flag else "Error")
+
     # swap(3,5)
     # find_num()
     # get_right_one(5)
-    find_num2()
-    arr = [0,1,2,5,6,7,8]
+    # find_num2()
+    # arr = [0,1,2,5,6,7,8]
     # arr = [7,6,5,2,1,0,8]
     # insert_sort(arr)
     # bubble_sort(arr)
-    print(bi_find(arr, 4))
+    # print(bi_find(arr, 4))
 
 
 if __name__ == "__main__":
