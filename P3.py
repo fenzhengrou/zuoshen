@@ -1,3 +1,5 @@
+import random
+
 """
 int >> 1 就是除以2， 而且比除以2要快
 """
@@ -114,8 +116,47 @@ def merge2(arr, l, mid, r):
         arr[l+i] = help[i]  # 不能直接+i，会导致arr中的元素被打乱，l代表已经完成排序的部分
     return result
 
-arr = [1,3,4,2,5]
-print(small_sum(arr))
-a = [1, 3, 2, 6, 5, 4]
-split(a, 0, len(a)-1)
-print(a)
+
+def quick_sort(arr, l, r):
+    if l < r:
+        idx = random.randint(l, r)
+        swap(arr, idx, r)
+        interval = partition(arr, l, r)
+        quick_sort(arr, l, interval[0] - 1)
+        quick_sort(arr, interval[1] + 1, r)
+
+
+def partition(arr, l, r):
+    less = l - 1
+    more = r  # 最后一个数为划分值
+    while l < more:
+        if arr[l] < arr[r]:
+            swap(arr, less + 1, l)
+            less += 1
+            l += 1
+        elif arr[l] > arr[r]:
+            swap(arr, l, more - 1)
+            more -= 1
+        else:
+            l += 1
+    swap(arr, more, r)
+    return [less + 1, more]
+
+
+def swap(arr, i, j):
+    tmp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = tmp
+
+
+def main():
+    arr = [3, 6, 2, 5, 7, 5]
+    # print(small_sum(arr))
+    quick_sort(arr, 0, len(arr) - 1)
+    a = [1, 3, 2, 6, 5, 4]
+    split(a, 0, len(a)-1)
+    print(a)
+
+
+if __name__ == '__main__':
+    main()
