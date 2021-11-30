@@ -1,4 +1,5 @@
-from P2 import *
+import random
+
 """
 int >> 1 就是除以2， 而且比除以2要快
 """
@@ -116,68 +117,46 @@ def merge2(arr, l, mid, r):
     return result
 
 
-def normal_swap(arr, i, j):
+def quick_sort(arr, l, r):
+    if l < r:
+        idx = random.randint(l, r)
+        swap(arr, idx, r)
+        interval = partition(arr, l, r)
+        quick_sort(arr, l, interval[0] - 1)
+        quick_sort(arr, interval[1] + 1, r)
+
+
+def partition(arr, l, r):
+    less = l - 1
+    more = r  # 最后一个数为划分值
+    while l < more:
+        if arr[l] < arr[r]:
+            swap(arr, less + 1, l)
+            less += 1
+            l += 1
+        elif arr[l] > arr[r]:
+            swap(arr, l, more - 1)
+            more -= 1
+        else:
+            l += 1
+    swap(arr, more, r)
+    return [less + 1, more]
+
+
+def swap(arr, i, j):
     tmp = arr[i]
     arr[i] = arr[j]
     arr[j] = tmp
 
 
-"""
-荷兰国旗问题：
-基础版：
-给定一个数，小于等于该数的，放数左边，大于的，放右边
-"""
-def flags_sort1(arr, num):
-    small = -1
-    for i in range(len(arr)):
-        if arr[i] < num:
-            normal_swap(arr, i, small+1)
-            small += 1
-
-"""
-版本2：
-给定一个数num
-小于num的放列表左边
-等于num的放列表中间
-大于num的放列表右边
-"""
-
-def flag_sort2(arr, num):
-    small = -1
-    idx = 0
-    big = len(arr)
-    while idx < big:
-        item = arr[idx]
-        if item < num:
-            normal_swap(arr, small+1, idx)
-            small += 1
-            idx += 1
-        elif item == num:
-            idx += 1
-        else:
-            normal_swap(arr, idx, big - 1)
-            big -= 1
+def main():
+    arr = [3, 6, 2, 5, 7, 5]
+    # print(small_sum(arr))
+    quick_sort(arr, 0, len(arr) - 1)
+    a = [1, 3, 2, 6, 5, 4]
+    split(a, 0, len(a)-1)
+    print(a)
 
 
-def quick_sort():
-    pass
-
-
-def partition(arr, l, r):
-    less = l - 1
-    more = r
-    while l < more:
-        if arr[l] < arr[r]:
-            normal_swap(arr, l, r)
-    pass
-
-
-arr = [3,5,6,3,4,5,2,6,9,0]
-# print(small_sum(arr))
-flags_sort1(arr, 4)
-print(arr)
-# flag_sort2(arr, 5)
-# print(arr)
-a = [1, 3, 2, 6, 5, 4]
-split(a, 0, len(a)-1)
-print(a)
+if __name__ == '__main__':
+    main()
