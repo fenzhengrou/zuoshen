@@ -11,13 +11,40 @@ index为i时
 可以用来求某任意长度数组中的前几个最大值
 小根堆：
 每一个子二叉树的根节点都是该二叉树中所有节点的最小值
+堆排序：
+将一个无序数组堆化（大根堆或小根堆）
+假设按照大根堆规则排序，先将数组堆化，然后取出二叉树根节点（最大值），然后堆化，再取出根节点（第二大）
+以此类推，全部取出后则实现了数组的从大到小排序
 """
+
 from P3 import *
 
 
 class Heap:
     def __init__(self):
         pass
+
+    def heap_sort(self, arr):
+        """
+        时间复杂度 O(NlogN)
+        空间复杂度 O(1)
+        :param arr:
+        :return:
+        """
+        if not arr or len(arr) < 2:
+            return
+
+        # 将数字插入堆中
+        for i in range(len(arr)):
+            self.heap_sort(arr)
+
+        heapSize = len(arr)
+        swap(arr, 0, heapSize - 1)
+        heapSize -= 1
+        while heapSize:
+            self.heapify(arr, 0, heapSize)
+            swap(arr, 0, heapSize - 1)
+            heapSize -= 1
 
     def heap_insert(self, arr, idx):
         # 如果下标为idx的节点值比其父节点的值大，则将其交换，继续向上比较
